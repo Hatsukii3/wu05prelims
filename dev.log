@@ -1,0 +1,14 @@
+Ferrero: July 14, 2026
+1. setup of mongodb, redis, & rabbitmq
+2. import libraries and fix python errors
+3. implement "dummy" cameras via nested for loop and used dummy image
+4. created temporary functions to view image, reset lock mechanisms
+5. implemented core functions as stated by the protocol
+7. tested core mechanics with dummy image
+8. testec core mechanics with ip camera capture (mobile phone)
+9. update code to rely on mongodb data instead of dummy values (e.g. camera details and ip camera urls, base on protocol)
+
+Ferrero: July 15, 2026
+1. Remake of schema (for performance)
+2. Code Rewrite in linking mongodb (part 2)
+3. creation of inference program

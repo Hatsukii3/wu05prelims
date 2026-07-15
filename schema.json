@@ -1,0 +1,10 @@
+[
+    {
+        "location":"Location1",
+        "network":"pferrero_5G",
+        "camera": 1,
+        "url": "http://192.168.254.110:8080/video",
+        "max_count": 10,
+        "count": 0
+    }
+]
