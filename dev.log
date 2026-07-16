@@ -12,3 +12,8 @@ Ferrero: July 15, 2026
 1. Remake of schema (for performance)
 2. Code Rewrite in linking mongodb (part 2)
 3. creation of inference program
+4. testing inference program with dummy image for functionality
+5. create pipeline connection between inference program and an altered sensing unit program (instance that gets a given picture instead of an ip stream)
+6. create dummy program to configure polygon (due to phase 1 not included)
+7. two polygons created, one occupied, one onoccupied. successfull testing will indicate that the final count will be 1
+8. Start pipeline testing
