@@ -17,3 +17,6 @@ Ferrero: July 15, 2026
 6. create dummy program to configure polygon (due to phase 1 not included)
 7. two polygons created, one occupied, one onoccupied. successfull testing will indicate that the final count will be 1
 8. Start pipeline testing
+
+Malan: July 20, 2026
+1. Set up Desktop Docker and Kubernetes.  
