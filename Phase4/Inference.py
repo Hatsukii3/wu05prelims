@@ -6,6 +6,8 @@ from ultralytics import YOLO
 import random
 import pickle
 import pymongo
+import json
+import time
 
 #MongoDB setup
 mdbClient = pymongo.MongoClient("mongodb+srv://xandstorm21:xandstorm21@researchprelims.l8nqb3x.mongodb.net/researchprelims.l8nqb3x.mongodb.net")
@@ -15,7 +17,8 @@ print("MongoDB ready")
 
 #RabbitMQ setup
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
-channel = connection.channel() #no need to redeclare queue 'requests'
+channel = connection.channel() #no need to redeclare queue 'requests' and other stamp queues
+
 print("RabbitMQ Setup")
 
 #Redis setup
@@ -38,17 +41,21 @@ def consume(ch, method, properties, body):
     count = 0
 
     #get id
-    uid = body.decode("utf-8")
-    print(f"Received {uid}")
+    raw = body.decode("utf-8")
+    camID, uid = raw.split(".")
+
+    channel.basic_publish("", "stamp3", json.dumps({"uid":uid, "time": time.time_ns()})) 
+    
+    print(f"Received {camID}")
 
     #fetch image
-    img = redisClient.get(uid)
+    img = redisClient.get(camID)
     img = np.frombuffer(img, dtype=np.uint8)
     img = cv2.imdecode(img, 0)
     imgHeight, imgWidth = img.shape
 
     #fetch polygon
-    polygons = redisClient.get(uid+"-polygons") #load from redis
+    polygons = redisClient.get(camID+"-polygons") #load from redis
     polygons = pickle.loads(polygons) #convert from bytes to nested list
     inside = [0 for i in range(len(polygons))]
     contours = []
@@ -81,14 +88,14 @@ def consume(ch, method, properties, body):
     print(f"{count} out of {len(contours)} have been detected")
 
     #update count
-    locationID, networkID, cameraID = uid.split("-")
+    locationID, networkID, cameraID = camID.split("-")
     query = {"location":locationID, "network":networkID, "id": cameraID}
     changes = {"$set": {"count":count}}
     mdbcol.update_one(query, changes)
 
     
     #update status
-    redisClient.set(uid+"-lock","no")
+    redisClient.set(camID+"-lock","no")
 
     cv2.imshow("IMAGE", img)
     k = cv2.waitKey(0)
@@ -98,6 +105,8 @@ def consume(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
     print("Packet Received!")
     print()
+    
+    channel.basic_publish("", "stamp4", json.dumps({"uid":uid, "time":time.time_ns()}))
 
 
 

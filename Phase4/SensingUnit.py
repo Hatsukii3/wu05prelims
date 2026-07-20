@@ -7,7 +7,6 @@ import uuid
 import time
 import json
 
-
 #setup
 locationID = "Location1"
 networkID = "pferrero_5G"
@@ -45,12 +44,13 @@ print("MongoDB data fetched")
 print("SensingUnit Started...")
 
 # initialize camera status (final)
-# ipCams = dict()
+ipCams = dict()
 
 for i in mdbdoc:
     redisClient.set(key(i["id"]) + "-lock", "no") #set to unlock status
-#     ipCams[key(i["id"])] = cv2.VideoCapture(i["url"])
-#     print("bar")
+    print("foo")
+    ipCams[key(i["id"])] = cv2.VideoCapture(i["url"])
+    print("bar")
 
 while True:
     for i in mdbdoc: #sample amount of cameras
@@ -64,8 +64,7 @@ while True:
         channel.basic_publish("", "stamp1", json.dumps({"uid":uid, "time":time.time_ns()})) #record first stamp
 
         #fetch image (validate with ip camera later)
-        # capImage = ipCams[camID].read()[1]
-        capImage = cv2.imread("./foo.jpeg")
+        capImage = ipCams[camID].read()[1]
 
         #image preprocessing (core)
         capWidth, capHeight, dummy = capImage.shape
@@ -84,21 +83,19 @@ while True:
 
         #send message to rabbitmq (core)
         print(f"Request to Rabbitmq: {camID}")
-        channel.basic_publish("","requests",f"{camID}.{uid}") #camera id alongside request id
+        channel.basic_publish("","requests",camID)
 
         #update lock status (core)
         print(f"Locking: {camID}")
         redisClient.set(camID + "-lock", "yes")
 
-        channel.basic_publish("", "stamp2", json.dumps({"uid":uid, "time":time.time_ns()})) #record next stamp
-
         # decode and view Image (temporary)
         # decode = np.frombuffer(capBytes, dtype=np.uint8)
         # decode = cv2.imdecode(decode, 0)
-        # cv2.imwrite("newimage.jpg", decode)
         # cv2.imshow("IMAGE", decode)
         # k = cv2.waitKey(0)
         # cv2.destroyAllWindows()
-        print()
 
+
+        channel.basic_publish("", "stamp2", json.dumps({"uid":uid, "time":time.time_ns()})) #record next stamp
 #PROGAM SUCCESS!

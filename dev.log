@@ -19,4 +19,9 @@ Ferrero: July 15, 2026
 8. Start pipeline testing
 
 Malan: July 20, 2026
-1. Set up Desktop Docker and Kubernetes.  
+1. Set up Desktop Docker and Kubernetes. 
+
+Ferrero: July 21, 2026
+1. Implement timestamps in the smart parking pipeline
+2. Tested whether the stamps are inserted to their respective queues (4)
+3. created another program to check whether the timestamp could be decoded
