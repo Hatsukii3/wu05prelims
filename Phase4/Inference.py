@@ -18,6 +18,11 @@ print("MongoDB ready")
 #RabbitMQ setup
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel() #no need to redeclare queue 'requests' and other stamp queues
+channel.queue_declare(queue='requests')
+channel.queue_declare(queue='stamp1')
+channel.queue_declare(queue='stamp2')
+channel.queue_declare(queue="stamp3")
+channel.queue_declare(queue="stamp4")
 
 print("RabbitMQ Setup")
 
@@ -97,9 +102,9 @@ def consume(ch, method, properties, body):
     #update status
     redisClient.set(camID+"-lock","no")
 
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("IMAGE", img)
+    # k = cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
     #manual acknowledgement
     ch.basic_ack(delivery_tag=method.delivery_tag)
