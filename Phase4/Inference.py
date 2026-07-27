@@ -6,7 +6,6 @@ from ultralytics import YOLO
 import random
 import pickle
 import pymongo
-import json
 import time
 
 #MongoDB setup
@@ -19,10 +18,7 @@ print("MongoDB ready")
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel() #no need to redeclare queue 'requests' and other stamp queues
 channel.queue_declare(queue='requests')
-channel.queue_declare(queue='stamp1')
-channel.queue_declare(queue='stamp2')
-channel.queue_declare(queue="stamp3")
-channel.queue_declare(queue="stamp4")
+channel.queue_declare(queue='timestamps') #queue receiving timestamps
 
 print("RabbitMQ Setup")
 
@@ -49,7 +45,7 @@ def consume(ch, method, properties, body):
     raw = body.decode("utf-8")
     camID, uid = raw.split(".")
 
-    channel.basic_publish("", "stamp3", json.dumps({"uid":uid, "time": time.time_ns()})) 
+    channel.basic_publish("", "timestamps", f"stamp3.{uid}.{time.time_ns()}") # 3rd tiemstamp
     
     print(f"Received {camID}")
 
@@ -110,9 +106,8 @@ def consume(ch, method, properties, body):
     ch.basic_ack(delivery_tag=method.delivery_tag)
     print("Packet Received!")
     print()
-    
-    channel.basic_publish("", "stamp4", json.dumps({"uid":uid, "time":time.time_ns()}))
 
+    channel.basic_publish("", "timestamps", f"stamp4.{uid}.{time.time_ns()}") # 4th tiemstamp
 
 
 #manual acknowledgement to prevent data loss
