@@ -5,7 +5,10 @@ import numpy as np
 import pymongo
 import uuid
 import time
+<<<<<<< HEAD
 import json
+=======
+>>>>>>> f4e002afa218415de0ec2e959e4a581b4c68d01f
 
 
 #setup
@@ -21,10 +24,14 @@ def key(cameraID):
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 channel.queue_declare(queue='requests')
+<<<<<<< HEAD
 channel.queue_declare(queue='stamp1')
 channel.queue_declare(queue='stamp2')
 channel.queue_declare(queue="stamp3")
 channel.queue_declare(queue="stamp4")
+=======
+channel.queue_declare(queue='timestamps') #queue receiving timestamps
+>>>>>>> f4e002afa218415de0ec2e959e4a581b4c68d01f
 print("RabbitMQ Ready")
 
 #redis setup/boilerplate
@@ -61,7 +68,11 @@ while True:
         #timestamp uid
         uid = str(uuid.uuid4())
 
+<<<<<<< HEAD
         channel.basic_publish("", "stamp1", json.dumps({"uid":uid, "time":time.time_ns()})) #record first stamp
+=======
+        channel.basic_publish("", "timestamps", f"stamp1.{uid}.{time.time_ns()}") #record first stamp
+>>>>>>> f4e002afa218415de0ec2e959e4a581b4c68d01f
 
         #fetch image (validate with ip camera later)
         # capImage = ipCams[camID].read()[1]
@@ -90,7 +101,12 @@ while True:
         print(f"Locking: {camID}")
         redisClient.set(camID + "-lock", "yes")
 
+<<<<<<< HEAD
         channel.basic_publish("", "stamp2", json.dumps({"uid":uid, "time":time.time_ns()})) #record next stamp
+=======
+
+        channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
+>>>>>>> f4e002afa218415de0ec2e959e4a581b4c68d01f
 
         # decode and view Image (temporary)
         # decode = np.frombuffer(capBytes, dtype=np.uint8)
