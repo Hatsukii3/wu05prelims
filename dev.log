@@ -94,3 +94,6 @@ Ferrero: July 27, 2026
 1. Fix Phase 6.1 
 a. undo the use of JSON
 b. ensure usage of only one queue for ease of timestamp retrieval
+
+Malan: July 28, 2026
+1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
