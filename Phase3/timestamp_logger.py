@@ -3,7 +3,6 @@ import pika
 from openpyxl import Workbook
 
 #Configuration var
-RABBITMQ_HOST = "localhost"
 QUEUE_NAME = "timestamps"
 OUTPUT_FILE = "DATA.xlsx"
 
@@ -12,7 +11,7 @@ OUTPUT_FILE = "DATA.xlsx"
 logs = {}
 
 # Connect to RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST))
+connection = pika.BlockingConnection(pika.ConnectionParameters("localhost",port=5672))
 channel = connection.channel()
 
 #Making sure the queue exists
