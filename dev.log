@@ -43,3 +43,8 @@ Malan: July 26, 2026
 3. 2/3 worked not RabbitMQ.
 4. Will fix yaml file for rabbit mq. 
 
+
+Ferrero: July 27, 2026
+1. Fix Phase 6.1 
+a. undo the use of JSON
+b. ensure usage of only one queue for ease of timestamp retrieval
