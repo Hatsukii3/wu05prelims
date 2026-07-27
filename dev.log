@@ -44,6 +44,52 @@ Malan: July 26, 2026
 4. Will fix yaml file for rabbit mq. 
 
 
+Ferrero: July 14, 2026
+1. setup of mongodb, redis, & rabbitmq
+2. import libraries and fix python errors
+3. implement "dummy" cameras via nested for loop and used dummy image
+4. created temporary functions to view image, reset lock mechanisms
+5. implemented core functions as stated by the protocol
+7. tested core mechanics with dummy image
+8. testec core mechanics with ip camera capture (mobile phone)
+9. update code to rely on mongodb data instead of dummy values (e.g. camera details and ip camera urls, base on protocol)
+
+Ferrero: July 15, 2026
+1. Remake of schema (for performance)
+2. Code Rewrite in linking mongodb (part 2)
+3. creation of inference program
+4. testing inference program with dummy image for functionality
+5. create pipeline connection between inference program and an altered sensing unit program (instance that gets a given picture instead of an ip stream)
+6. create dummy program to configure polygon (due to phase 1 not included)
+7. two polygons created, one occupied, one onoccupied. successfull testing will indicate that the final count will be 1
+8. Start pipeline testing
+
+Malan: July 20, 2026
+1. Set up Desktop Docker and Kubernetes. 
+
+Ferrero: July 21, 2026
+1. Implement timestamps in the smart parking pipeline
+2. Tested whether the stamps are inserted to their respective queues (4)
+3. created another program to check whether the timestamp could be decoded
+
+Malan: July 24-25, 2026 
+1. Organized the Phase 5 project structure into docker/, kubernetes/, scripts/, and docs/ directories.
+2. Optimized the Dockerfile to reduce image size by using a lightweight Python base image and minimizing unnecessary dependencies.
+3. Created Kubernetes configuration files, including the namespace, deployment, RabbitMQ, Redis, MongoDB, services, and KEDA ScaledObject.
+4. Updated the inference program to support Kubernetes service communication using environment variables instead of localhost connections.
+5. Created PowerShell scripts for building the Docker image, deploying Kubernetes resources, rebuilding the deployment, monitoring logs, checking cluster status, restarting deployments, deleting resources, and installing KEDA.
+6. Created project documentation files, including README, architecture overview, deployment guide, troubleshooting guide, and development notes.
+7. Built and tested the Docker image and verified successful image creation in the local Docker registry.
+8. Assisted in configuring the Kubernetes deployment workflow, including Docker image creation, deployment procedures, and cluster organization.
+9. Reviewed the implementation procedure for Phase E.5 (Creation of a Processing Layer via Kubernetes Cluster) and aligned the project structure with the research protocol.
+
+Malan: July 26, 2026 
+1. Ran Kubernetes and started the 3 services (RabbiotMQ, Reddis and MongoDb) defined in yaml files and used kubectl command.
+2. created a python program tp test run the 3 servces. 
+3. 2/3 worked not RabbitMQ.
+4. Will fix yaml file for rabbit mq. 
+
+
 Ferrero: July 27, 2026
 1. Fix Phase 6.1 
 a. undo the use of JSON
