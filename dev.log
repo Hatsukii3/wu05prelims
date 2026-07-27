@@ -94,3 +94,11 @@ Ferrero: July 27, 2026
 1. Fix Phase 6.1 
 a. undo the use of JSON
 b. ensure usage of only one queue for ease of timestamp retrieval
+
+Gaje: July 28, 2026
+1. created the timestamp gathering program
+2. testing the timestamp gathering program
+
+Ferrero: July 28, 2026
+1. Troubleshooted sensing unit program after noticing negative latencies
+2. Fix: publish type 2 timestamp first before the publish the request to processing layer

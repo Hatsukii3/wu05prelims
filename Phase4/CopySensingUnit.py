@@ -80,6 +80,7 @@ while True:
 
         #send message to rabbitmq (core)
         print(f"Request to Rabbitmq: {camID}")
+        channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
         channel.basic_publish("","requests",f"{camID}.{uid}") #camera id alongside request id
 
         #update lock status (core)
@@ -87,7 +88,7 @@ while True:
         redisClient.set(camID + "-lock", "yes")
 
 
-        channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
+
 
         # decode and view Image (temporary)
         # decode = np.frombuffer(capBytes, dtype=np.uint8)
