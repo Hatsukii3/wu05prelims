@@ -4,3 +4,4 @@ numpy
 opencv-python-headless   # <--- USE THIS instead of opencv-python
 ultralytics
 pymongo
+lapx

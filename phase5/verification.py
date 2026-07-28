@@ -10,7 +10,7 @@ connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost',
 
 channel = connection.channel()
 
-# connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+connection = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
 #mongoc = pymongo.MongoClient("localhost:27017")
 #redisc = redis.Redis(host='localhost', port=6379, password=None, db=0)
 

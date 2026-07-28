@@ -22,7 +22,7 @@ print("MongoDB Ready")
 # RabbitMQ Setup
 
 connection = pika.BlockingConnection(
-    pika.ConnectionParameters("host.docker.internal")
+    pika.ConnectionParameters("rabbitmq")
 )
 
 channel = connection.channel()
@@ -34,11 +34,8 @@ print("RabbitMQ Ready")
 
 # Redis Setup
 
-redisClient = redis.Redis(
-    "host.docker.internal",
-    6379,
-    0
-)
+redisClient = redis.Redis("redis",6379,0)
+
 
 print("Redis Ready")
 

@@ -24,11 +24,9 @@ print(f"Listening on queue '{QUEUE_NAME}'...\n")
 
 #Callback Function
 def callback(ch, method, properties, body):
-    global size
-    data = body.decode("utf-8").split('.')
-    print(data)
-    uid = data[1]
+    data = body.decode("utf-8").split(".")
     stype = data[0]
+    uid = data[1]
     timestamp = data[2]
 
     print(f"UID: {uid} | Time: {timestamp}")
