@@ -105,3 +105,5 @@ Ferrero: July 28, 2026
 Malan: July 28, 2026
 1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
 
+Ferrero: August 4, 2026
+1. Used laptop to run other member's code (Gaje & Timestamp Collection Program)
