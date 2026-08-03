@@ -104,3 +104,4 @@ Ferrero: July 28, 2026
 2. Fix: publish type 2 timestamp first before the publish the request to processing layer
 Malan: July 28, 2026
 1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
+
