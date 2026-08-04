@@ -7,15 +7,31 @@ import random
 import pickle
 import pymongo
 import time
+import os
+
+# MDB_HOST = os.environ.get("MONGO_HOST", "mongodb.smart-parking")
+# REDIS_HOST = os.environ.get("REDIS_HOST", "redis.smart-parking")
+# RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST", "rabbitmq.smart-parking")
+
+MDB_HOST = os.environ.get("MONGO_HOST", "localhost")
+REDIS_HOST = os.environ.get("REDIS_HOST", "localhost")
+RABBITMQ_HOST = os.environ.get("RABBITMQ_HOST", "localhost")
+
+MDB_PORT = int(os.environ.get("MONGO_PORT", 27017))
+REDIS_PORT = int(os.environ.get("REDIS_PORT", 6379))
+RABBITMQ_PORT = int(os.environ.get("RABBITMQ_PORT", 5672))
+
+# RABBITMQ_PORT = int(os.environ.get("RABBITMQ_PORT", 5673))
+
 
 #MongoDB setup
-mdbClient = pymongo.MongoClient("mongodb://mongodb.smart-parking:27017/")
+mdbClient = pymongo.MongoClient(f"mongodb://{MDB_HOST}:{MDB_PORT}/")
 mdb = mdbClient["prelims"]
 mdbcol = mdb["col1"]
 print("MongoDB ready")
 
 #RabbitMQ setup
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq.smart-parking', port=5672))
+connection = pika.BlockingConnection(pika.ConnectionParameters(host=RABBITMQ_HOST, port=RABBITMQ_PORT))
 channel = connection.channel() #no need to redeclare queue 'requests' and other stamp queues
 
 channel.queue_declare(queue='requests')
@@ -26,7 +42,7 @@ print("RabbitMQ Setup")
     #Redis setup
 
 #redis setup/boilerplate
-redisClient = redis.Redis(host='redis.smart-parking', port=6379)
+redisClient = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 print("Redis Ready")
 
 #yolo setup
@@ -72,14 +88,14 @@ def consume(ch, method, properties, body):
             vertex[1] = vertex[1] * imgHeight
         contours.append(np.array(polygon, dtype=np.int32))
 
-    cv2.drawContours(img, contours, -1, (0,255,0), 3)
+    # cv2.drawContours(img, contours, -1, (0,255,0), 3)
     
     for result in results:
         class_names = result.names
         for box in result.boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             center = ((x1+x2)//2,(y1+y2)//2)
-            cv2.circle(img, center,10, (255,0,0))
+            # cv2.circle(img, center,10, (255,0,0))
             for i in range(len(contours)):
                 if(cv2.pointPolygonTest(contours[i], center, False) >= 0):
                     inside[i] = 1
@@ -99,9 +115,6 @@ def consume(ch, method, properties, body):
     #update status
     redisClient.set(camID+"-lock","no")
 
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
 
     #manual acknowledgement
     ch.basic_ack(delivery_tag=method.delivery_tag)
