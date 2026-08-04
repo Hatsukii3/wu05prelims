@@ -89,7 +89,6 @@ Malan: July 26, 2026
 3. 2/3 worked not RabbitMQ.
 4. Will fix yaml file for rabbit mq. 
 
-
 Ferrero: July 27, 2026
 1. Fix Phase 6.1 
 a. undo the use of JSON
@@ -102,5 +101,8 @@ Gaje: July 28, 2026
 Ferrero: July 28, 2026
 1. Troubleshooted sensing unit program after noticing negative latencies
 2. Fix: publish type 2 timestamp first before the publish the request to processing layer
+
 Malan: July 28, 2026
 1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
+
+Malan: August 03, 2026

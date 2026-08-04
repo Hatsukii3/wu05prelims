@@ -36,4 +36,4 @@ spec:
 
       value: "1"
 
-      host: amqp://guest:guest@rabbitmq:5672/
+      host: amqp://guest:guest@rabbitmq:5672

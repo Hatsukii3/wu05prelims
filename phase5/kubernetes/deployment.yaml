@@ -1,49 +1,41 @@
+#inference pod
+
 apiVersion: apps/v1
 kind: Deployment
-
 metadata:
-  name: inference
+  name: inference-pod
   namespace: smart-parking
-
+  labels:
+    app: inference-pod
 spec:
   replicas: 1
-
   selector:
     matchLabels:
-      app: inference
-
+      app: inference-pod
   template:
     metadata:
       labels:
-        app: inference
-
+        app: inference-pod
     spec:
-
       containers:
-
-      - name: inference
-
-        image: inference-program:latest
-
-        imagePullPolicy: Never
-
+      - name: inference-container
+        image: inference-pod:v1
+        imagePullPolicy: IfNotPresent
+        # command: ["python", "-u", "InferencePod.py"]
         env:
-
+        - name: PYTHONUNBUFFERED
+          value: "1"
+        - name: YOLO_CONFIG_DIR
+          value: "/tmp"
         - name: RABBITMQ_HOST
-          value: rabbitmq
-
-        - name: REDIS_HOST
-          value: redis
-
+          value: "rabbitmq"
         - name: MONGO_HOST
-          value: mongodb
-
-        resources:
-
-          requests:
-            cpu: "250m"
-            memory: "512Mi"
-
-          limits:
-            cpu: "1"
-            memory: "1Gi"
+          value: "mongodb"
+        - name: REDIS_HOST
+          value: "redis"
+        - name: RABBITMQ_PORT
+          value: "5672"
+        - name: MONGO_PORT
+          value: "27017"
+        - name: REDIS_PORT
+          value: "6379"
