@@ -106,3 +106,6 @@ Malan: July 28, 2026
 1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
 
 Malan: August 03, 2026
+1. Created and aligned Kubernetes manifests ("init.yaml" and "deployment.yaml") with matching service environment variables for MongoDB, Redis, and RabbitMQ.
+2. Resolved container execution and file path errors in the inference deployment, adding unbuffered logging (`PYTHONUNBUFFERED=1`) and setting `YOLO_CONFIG_DIR` overrides.
+3. Successfully ran the database initialization job and verified the inference pod deployment in the Kubernetes cluster.
