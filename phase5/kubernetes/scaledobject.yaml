@@ -1,39 +1,20 @@
 apiVersion: keda.sh/v1alpha1
-
 kind: ScaledObject
-
 metadata:
-
   name: inference-scaler
-
   namespace: smart-parking
-
 spec:
-
   scaleTargetRef:
-
-    name: inference
-
-  pollingInterval: 1
-
-  cooldownPeriod: 60
-
-  minReplicaCount: 1
-
+    name: inference-pod
+  minReplicaCount: 0
   maxReplicaCount: 8
-
+  pollingInterval: 1
+  cooldownPeriod: 60
   triggers:
-
   - type: rabbitmq
-
     metadata:
-
       protocol: amqp
-
       queueName: requests
-
       mode: QueueLength
-
       value: "1"
-
-      host: amqp://guest:guest@rabbitmq:5672
+      host: amqp://guest:guest@rabbitmq.smart-parking.svc.cluster.local:5672/

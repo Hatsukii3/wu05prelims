@@ -54,7 +54,11 @@ def getColours(cls_num):
     random.seed(cls_num)
     return tuple(random.randint(0, 255) for _ in range(3))
 
+
+channel.basic_qos(prefetch_count=1)
 def consume(ch, method, properties, body):
+
+    print(f"Received {camID}")
     #setup
     count = 0
 
@@ -64,7 +68,7 @@ def consume(ch, method, properties, body):
 
     channel.basic_publish("", "timestamps", f"stamp3.{uid}.{time.time_ns()}") # 3rd tiemstamp
     
-    print(f"Received {camID}")
+    
 
     #fetch image
     img = redisClient.get(camID)

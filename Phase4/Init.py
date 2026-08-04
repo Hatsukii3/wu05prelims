@@ -9,6 +9,7 @@ db = mdbClient['prelims']
 collection = db['col1']
 collection.drop()
 
+#to enable scaling
 mdb_init_data = [
     {
         "location":"Location1",
@@ -17,7 +18,31 @@ mdb_init_data = [
         "url": "http://192.168.254.110:8080/video",
         "max_count": 2,
         "count": 0
-    }
+    },
+    {
+            "location":"Location1",
+            "network":"pferrero_5G",
+            "id": 2,
+            "url": "http://192.168.254.110:8080/video",
+            "max_count": 2,
+            "count": 0
+        },
+        {
+            "location":"Location1",
+            "network":"pferrero_5G",
+            "id": 3,
+            "url": "http://192.168.254.110:8080/video",
+            "max_count": 2,
+            "count": 0
+        },
+        {
+            "location":"Location1",
+            "network":"pferrero_5G",
+            "id": 4,
+            "url": "http://192.168.254.110:8080/video",
+            "max_count": 2,
+            "count": 0
+        },
 ]
 
 collection.insert_many(mdb_init_data)
@@ -46,5 +71,8 @@ for i in sample_coords:
 
 print(sample_coords)
 data = pickle.dumps(sample_coords)
-redisClient.set(f"Location1-pferrero_5G-1-polygons", data) #link to redis
+
+for i in range(len(mdb_init_data)):
+    redisClient.set(f"Location1-pferrero_5G-{i+1}-polygons", data) #link to redis
+
 print("SUCCESS!")

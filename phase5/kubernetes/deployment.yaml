@@ -1,5 +1,3 @@
-#inference pod
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -17,11 +15,19 @@ spec:
       labels:
         app: inference-pod
     spec:
+      terminationGracePeriodSeconds: 60
       containers:
       - name: inference-container
         image: inference-pod:v1
         imagePullPolicy: IfNotPresent
-        # command: ["python", "-u", "InferencePod.py"]
+        command: ["python", "-u", "InferencePod.py"]
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
         env:
         - name: PYTHONUNBUFFERED
           value: "1"
