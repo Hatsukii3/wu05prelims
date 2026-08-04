@@ -106,3 +106,6 @@ Malan: July 28, 2026
 1. Fixed the RabbitMQ service in Kubernetes (changed the port because theres a conflict with the default port 5672)
 
 Malan: August 03, 2026
+
+Ferrero: August 4, 2026
+1. Used personal laptop to test other member's code (Gaje) for timestamp collection
