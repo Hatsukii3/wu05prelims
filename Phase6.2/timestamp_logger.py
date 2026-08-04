@@ -4,7 +4,7 @@ from openpyxl import Workbook
 
 # Configuration Variables
 QUEUE_NAME = "timestamps"
-OUTPUT_FILE = "DATA1.xlsx"
+OUTPUT_FILE = "DATA.xlsx"
 
 # Storage
 logs = {}
@@ -23,7 +23,6 @@ print(f"Listening on queue '{QUEUE_NAME}'...\n")
 
 # Callback Function 
 def callback(ch, method, properties, body):
-    global size
     data = body.decode('utf-8').split(".")
     
     stype = data[0]
@@ -61,10 +60,6 @@ for uid, timestamps, in logs.items():
         (timestamps["stamp3"]-timestamps["stamp2"])/1000000,
         (timestamps["stamp4"]-timestamps["stamp3"])/1000000
     ])
-
-#column 1: latency sensing unit program
-#column 2: queue lifetime
-#column 3: latency inference program
 
 workbook.save(OUTPUT_FILE)
 
