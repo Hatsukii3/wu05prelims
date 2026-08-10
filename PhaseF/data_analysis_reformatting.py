@@ -2,8 +2,8 @@ import shutil
 from openpyxl import load_workbook, Workbook
 
 #Create duplicate files
-for i in range(2, 6):       #Creates DATA2.xlsx to DATA5.xlsx 
-    shutil.copyfile("DATA1.xlsx", f"DATA{i}.xlsx")
+# for i in range(2, 6):       #Creates DATA2.xlsx to DATA5.xlsx 
+#     shutil.copyfile("DATA1.xlsx", f"DATA{i}.xlsx")
 
 #Create summary workbook
 summary = Workbook()
@@ -13,8 +13,8 @@ sheet.title = "Summary"
 sheet.append(["Row", "Source File", "Total Processing Time"])
 
 #Process all files
-for i in range(1, 6):
-    filename = f"DATA{i}.xlsx"
+for i in range(3):
+    filename = f"./dataFolder/data{i + 1}.xlsx"
 
     workbook =  load_workbook(filename)
     data = workbook.active
