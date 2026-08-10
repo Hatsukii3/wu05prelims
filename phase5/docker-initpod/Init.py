@@ -9,41 +9,24 @@ db = mdbClient['prelims']
 collection = db['col1']
 collection.drop()
 
-#to enable scaling
-mdb_init_data = [
-    {
-        "location":"Location1",
-        "network":"pferrero_5G",
-        "id": 1,
-        "url": "http://192.168.254.110:8080/video",
-        "max_count": 2,
-        "count": 0
-    },
-    {
-            "location":"Location1",
-            "network":"pferrero_5G",
-            "id": 2,
-            "url": "http://192.168.254.110:8080/video",
-            "max_count": 2,
-            "count": 0
-        },
-        {
-            "location":"Location1",
-            "network":"pferrero_5G",
-            "id": 3,
-            "url": "http://192.168.254.110:8080/video",
-            "max_count": 2,
-            "count": 0
-        },
-        {
-            "location":"Location1",
-            "network":"pferrero_5G",
-            "id": 4,
-            "url": "http://192.168.254.110:8080/video",
-            "max_count": 2,
-            "count": 0
-        },
-]
+data_template = {
+    "location":"Location1",
+    "network":"pferrero_5G",
+    "id": 1,
+    "url": "http://192.168.254.110:8080/video",
+    "max_count": 2,
+    "count": 0
+}
+
+#to enable scalin
+mdb_init_data = []
+
+cameraAmt = 70
+
+for i in range(cameraAmt):
+    data = data_template.copy()
+    data["id"] = i + 1
+    mdb_init_data.append(data)
 
 collection.insert_many(mdb_init_data)
 print("MongoDB data inserted!")

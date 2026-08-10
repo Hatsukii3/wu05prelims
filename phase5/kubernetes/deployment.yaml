@@ -23,11 +23,11 @@ spec:
         command: ["python", "-u", "InferencePod.py"]
         resources:
           requests:
-            memory: "512Mi"
-            cpu: "500m"
+            memory: "350Mi"
+            cpu: "250m"
           limits:
-            memory: "2Gi"
-            cpu: "2000m"
+            memory: "800Mi"
+            cpu: "750m"
         env:
         - name: PYTHONUNBUFFERED
           value: "1"

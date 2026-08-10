@@ -34,6 +34,18 @@ spec:
 
         image: rabbitmq:3-management
 
+        resources:
+        
+          requests:
+
+            memory: "2Gi"
+
+            cpu: "500m"
+
+          limits:
+
+            memory: "4Gi"
+
         ports:
 
         - containerPort: 5672

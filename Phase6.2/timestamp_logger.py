@@ -4,13 +4,13 @@ from openpyxl import Workbook
 
 # Configuration Variables
 QUEUE_NAME = "timestamps"
-OUTPUT_FILE = "DATA1.xlsx"
+OUTPUT_FILE = "data3.xlsx"
 
 # Storage
-logs = {}
+logs = {}                  
 
 # Connect to RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', port=5673))
 channel = connection.channel()
 
 # Making sure the queue exists

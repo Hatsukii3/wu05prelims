@@ -6,7 +6,7 @@ metadata:
 spec:
   scaleTargetRef:
     name: inference-pod
-  minReplicaCount: 0
+  minReplicaCount: 1
   maxReplicaCount: 8
   pollingInterval: 1
   cooldownPeriod: 60
@@ -16,5 +16,5 @@ spec:
       protocol: amqp
       queueName: requests
       mode: QueueLength
-      value: "1"
+      value: "20"
       host: amqp://guest:guest@rabbitmq.smart-parking.svc.cluster.local:5672/
