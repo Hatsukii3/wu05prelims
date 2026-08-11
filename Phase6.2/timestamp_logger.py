@@ -4,7 +4,7 @@ from openpyxl import Workbook
 
 # Configuration Variables
 QUEUE_NAME = "timestamps"
-OUTPUT_FILE = "data3.xlsx"
+OUTPUT_FILE = "data1.xlsx"
 
 # Storage
 logs = {}                  
