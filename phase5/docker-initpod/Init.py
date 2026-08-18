@@ -21,7 +21,7 @@ data_template = {
 #to enable scalin
 mdb_init_data = []
 
-cameraAmt = 70
+cameraAmt = 63
 
 for i in range(cameraAmt):
     data = data_template.copy()

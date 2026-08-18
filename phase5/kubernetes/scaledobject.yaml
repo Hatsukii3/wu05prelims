@@ -16,5 +16,5 @@ spec:
       protocol: amqp
       queueName: requests
       mode: QueueLength
-      value: "20"
+      value: "7"
       host: amqp://guest:guest@rabbitmq.smart-parking.svc.cluster.local:5672/
