@@ -126,3 +126,10 @@ Gaje: August 6, 2026
 Malan: August 10, 2026
 1. Successfuly run datagathering for 6.2 and reformatting of datta in Phasef.
 2. 6/7 Preliminary activities are completed.
+
+
+Ferrero: August 19, 2026
+1. created the phase 1 camera configuration program
+2. completely added features to mark parking spots within a camera view
+3. created features of choosing existing cameras to configure and create new camera objects
+4. Future: will properly stitch the individual prompts to a central cohesive prompt

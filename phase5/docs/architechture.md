@@ -2,9 +2,13 @@
 
 The smart parking system is composed of the following components:
 
+Input Layer (Configuration)
+-Create Camera Objects linking RTSP/HTTP urls
+-Define Parking Spots for every Camera Objectq
+
 Input Layer
 - IP Camera
-- Sensing Unit
+- Sensing Unit Program
 
 Communication Layer
 - RabbitMQ

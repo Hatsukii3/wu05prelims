@@ -25,7 +25,7 @@ cameraAmt = 63
 
 for i in range(cameraAmt):
     data = data_template.copy()
-    data["id"] = i + 1
+    data["id"] = str(i + 1)
     mdb_init_data.append(data)
 
 collection.insert_many(mdb_init_data)
