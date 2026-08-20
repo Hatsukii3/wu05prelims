@@ -14,7 +14,7 @@ maxwidth = 427
 sample_coords = [
     [[62, 368],[117, 366],[126, 452],[71, 456]],
     [[107, 232],[155, 230], [159, 289], [107, 289]]
-]
+] 
 
 #convert to coordinate 
 for i in sample_coords:
