@@ -14,7 +14,7 @@ mdb_init_data = [
     {
         "location":"Location1",
         "network":"pferrero_5G",
-        "id": 1,
+        "id": "1",
         "url": "http://192.168.254.110:8080/video",
         "max_count": 2,
         "count": 0
@@ -22,7 +22,7 @@ mdb_init_data = [
     {
             "location":"Location1",
             "network":"pferrero_5G",
-            "id": 2,
+            "id": "2",
             "url": "http://192.168.254.110:8080/video",
             "max_count": 2,
             "count": 0
@@ -30,7 +30,7 @@ mdb_init_data = [
         {
             "location":"Location1",
             "network":"pferrero_5G",
-            "id": 3,
+            "id": "3",
             "url": "http://192.168.254.110:8080/video",
             "max_count": 2,
             "count": 0
@@ -38,7 +38,7 @@ mdb_init_data = [
         {
             "location":"Location1",
             "network":"pferrero_5G",
-            "id": 4,
+            "id": "4",
             "url": "http://192.168.254.110:8080/video",
             "max_count": 2,
             "count": 0

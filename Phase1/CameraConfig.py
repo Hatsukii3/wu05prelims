@@ -34,13 +34,36 @@ redisClient = redis.Redis(host="localhost", port="6379")
 print("Redis Ready")
 
 #load data
-data = [i for i in mdbcol.find()]
+
+data = None
+
+
+
+def updateData():
+    print("Refetching mongodb")
+    global data
+    data = [i for i in mdbcol.find()]
+
+updateData()
 
 def createNewObject():
-    newLocationName = input("Location Name: ")
-    newSSIDName = input("SSID: ")
+    while True:
+        exitInput = True
+        newLocationName = input("Location Name: ")
+        newSSIDName = input("SSID: ")
+        newCameraID = input("Camera ID: ")
+
+        for i in data:
+            if(newLocationName == i['location'] and newSSIDName == i['network'] and newCameraID == i['id']):
+                exitInput = False
+
+        if(exitInput): break
+        else:
+            print("Object already exists with the same details.")
+
+
     newCameraURL = input("HTTP/RTSP url: ")
-    newCameraID = input("Camera ID: ")
+    
 
     newObject = {
         "location": newLocationName,
@@ -52,21 +75,21 @@ def createNewObject():
     }
 
     mdbcol.insert_one(newObject)
-
-    configureSpots(newObject)
+    updateData()
+    configureObject(newObject)
 
 def editObject():
 
     locationQuery = []
     ssidQuery = []
 
-    print("Results 1 of 3")
+    print("Results #1")
     for i in data:
         print(f"{i["location"]}-{i["network"]}-{i["id"]}")
 
     newLocationName = input("Location Name: ")
 
-    print("\nResults 2 of 3")
+    print("\nResults #2")
     
 
     for i in data:
@@ -94,7 +117,35 @@ def editObject():
         print("Error: Object does not exist based on the 3 given parameters")
         return
 
-    configureSpots(i)
+    configureObject(selectedObj)
+
+def configureObject(obj): #new set of prompts after selecting/creating object
+    print(f"Configuring: {obj['location']}-{obj['network']}-{obj['id']}")
+
+    while True:
+        print()
+        print("(1) Edit RTSP/HTTP URL")
+        print("(2) Edit Parking spots")
+        print("(3) Exit")
+
+        choice = input("Enter Choice: ")
+
+        if(choice == "1"): #update url
+            newURL = input("Enter New URL")
+            mdbcol.find_one_and_update({
+                "location": obj['location'],
+                'id':obj['id'],
+                'network':obj['network']
+            },{
+                "$set": {"url":newURL}
+            })
+            updateData()
+        elif(choice == "2"):
+            configureSpots(obj)
+        elif (choice == "3"):
+            break
+        else:
+            print("Please Enter a Valid Input")
 
 def configureSpots(obj):
     global bufferPolygons, quitSpotMaking, bufferContours, bufferImage, bufferImageCopy
@@ -144,7 +195,19 @@ def configureSpots(obj):
             j[0] /= capWidth
             j[1] /= capHeight
 
+    #update polygons
     redisClient.set(f"{obj['location']}-{obj['network']}-{obj['id']}-polygons", pickle.dumps(bufferPolygons))
+
+    #update max vehicle count
+    mdbcol.find_one_and_update({
+        "location":obj['location'],
+        "id": obj['id'],
+        "network": obj['network'],
+    }, {
+        "$set": {"max_count":len(bufferPolygons)} #amount of polygons
+    })
+
+    updateData()
  #refer to this    
 
 
@@ -225,4 +288,19 @@ def markSpot():
 #next tasks
 #create main prompt properly making choice either choosing to edit or create new object
 
-editObject()
+while True:
+    print("YELLOW")
+    print("(1) Edit Camera Object")
+    print("(2) Create Camera Object")
+    print("(3) Exit")
+
+    choice = input("Enter choice: ")
+
+    if(choice == "1"):
+        editObject()
+    elif(choice == "2"):
+        createNewObject()
+    elif(choice == "3"):
+        break
+    else:
+        print("Please enter a valid input. ")
