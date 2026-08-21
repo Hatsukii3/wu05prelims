@@ -140,3 +140,8 @@ Malan: August 21, 2026
 2. Configured image preprocessing pipeline for grayscale conversion and file size compression below 100 KB
 3. Implemented YOLOv8 fine-tuning script with customized data augmentations (mosaic, mixup, rotation, scaling)
 4. Exported fine-tuned model checkpoint into quantized ONNX INT8 format for optimized inference
+
+Malan: August 22, 2026
+1. Fixed the Phase 3 implementation to correctly follow the dataset preprocessing, augmentation, and model training workflow
+2. Updated dataset preprocessing to handle grayscale conversion directly
+3. Re-architected data augmentation and training scripts to reflect the correct execution sequence
