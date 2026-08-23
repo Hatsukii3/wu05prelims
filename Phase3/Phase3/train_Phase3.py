@@ -9,15 +9,12 @@ def main():
     model.train(
         data="dataset.yaml",
         epochs=100,
-        batch=16,           
+        batch=16,
         imgsz=640,
-        workers=8,          
-        device=0, # Use GPU
-        amp=True,           
+        workers=4,
+        device="cpu",
         lr0=0.01,
         lrf=0.01,
-        
-        #Augmentations
         degrees=15.0,
         translate=0.1,
         scale=0.5,
@@ -26,7 +23,6 @@ def main():
         fliplr=0.5,
         mosaic=1.0,
         mixup=0.15,
-        
         project="runs",
         name="vehicle_model",
         exist_ok=True
