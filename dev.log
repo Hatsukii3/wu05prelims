@@ -145,3 +145,6 @@ Malan: August 22, 2026
 1. Fixed the Phase 3 implementation to correctly follow the dataset preprocessing, augmentation, and model training workflow
 2. Updated dataset preprocessing to handle grayscale conversion directly
 3. Re-architected data augmentation and training scripts to reflect the correct execution sequence
+
+Malan: August 23, 2026
+1. Finished training the model 
