@@ -39,9 +39,6 @@ def main():
     best_weights = "runs/vehicle_model/weights/best.pt"
     if os.path.exists(best_weights):
         trained_model = YOLO(best_weights)
-        trained_model.export(format="onnx", int8=True, data="dateset.yaml")
-        print("Model sucessfully exported to ONNX INT8 format.")
-
         print("ALL Phase 3 tasks completed successfully.")
 
 if __name__ == "__main__":

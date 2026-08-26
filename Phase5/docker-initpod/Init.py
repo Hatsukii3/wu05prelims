@@ -21,7 +21,7 @@ data_template = {
 #to enable scalin
 mdb_init_data = []
 
-cameraAmt = 63
+cameraAmt = 42 #this is for the number of camera loads 
 
 for i in range(cameraAmt):
     data = data_template.copy()
