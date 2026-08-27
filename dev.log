@@ -168,3 +168,5 @@ Ferrero: August 27, 2026
 3. Debugged preprocessing and/or augmentation
 4. Transfered brightness augmentation from DIY to Ultralytics parameters
 5. Stopped recording to reinstall python 3.12 because pytorch not working on 3.14
+6. validating phase 4
+7. debugging polygons in phase 4

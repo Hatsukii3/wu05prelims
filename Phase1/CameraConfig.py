@@ -122,6 +122,8 @@ def createNewObject():
         "id": newCameraID
     }
 
+    redisClient.set(f"{keyStr(newObject)}-polygons", pickle.dumps([]))
+
     mdbcol.insert_one(newObject)
     updateData()
     verifyConnection(newObject)
