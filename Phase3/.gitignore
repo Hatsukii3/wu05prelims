@@ -1,10 +1,9 @@
-# Ignore dataset folders anywhere in the project
+# Ignore all dataset folders
 **/dataset/
 dataset/
 
-# Ignore runs/ and model checkpoint files
-**/runs/
-*.pt
+# Ignore Phase3_trial runs folder
+Phase3_trial/runs/
 
-# Ignore virtual environments if present
+# Ignore virtual environments
 **/venv/
