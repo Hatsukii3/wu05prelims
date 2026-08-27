@@ -158,3 +158,6 @@ Gaje: August 25, 2026
 Gaje: August 26, 2026
 1. Modified Phase 3 (changed to remove convert best.pt to ONNX
 2. Ran the Phase 3 pipeline
+3. Debugged preprocessing and/or augmentation
+4. Transfered brightness augmentation from DIY to Ultralytics parameters
+5. Stopped recording to reinstall python 3.12 because pytorch not working on 3.14

@@ -1,0 +1,10 @@
+# Ignore dataset folders anywhere in the project
+**/dataset/
+dataset/
+
+# Ignore runs/ and model checkpoint files
+**/runs/
+*.pt
+
+# Ignore virtual environments if present
+**/venv/
