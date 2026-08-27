@@ -18,7 +18,7 @@ bufferPolygons = [] # stored mapping spots
 bufferContours = [] # contour states with bufferPolygons
 bufferImage = None # for global access of temporary image
 bufferImageCopy = None # to clear window for editing spot events
-enableIP = True # either real ip cameras or use sample bufferImage
+enableIP = False # either real ip cameras or use sample bufferImage
 quitSpotMaking = False # check if user quits editing parking spots
 deletedPolygon = False # check if user deletes a polygon
 ipCams = dict()
@@ -48,7 +48,12 @@ def updateData():
 
     for i in mdbcol.find():
         data.append(i)
-        ipCams[keyStr(i)] = cv2.VideoCapture(i['url']) #
+
+
+        ipCams[keyStr(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
+
+        if not ipCams[keyStr(i)].isOpened():
+            print(f"Cannot load camera for {keyStr(i)}")
 
 
 updateData()
