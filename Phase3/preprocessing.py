@@ -13,24 +13,24 @@ def convert_to_grayscale(dataset_dir = "dataset"):
         if not os.path.exists(img_folder):
             continue
 
-    for root, _, files in os.walk(img_folder)
-        for file in files:
-            if file.lower().endswith((".jpeg","jpg",".png")):
-                file_path = os.path.join(root, file)
-                img = cv2.imread(file_path)
-                if img is None:
-                    continue
+        for root, _, files in os.walk(img_folder):
+            for file in files:
+                if file.lower().endswith((".jpeg","jpg",".png")):
+                    file_path = os.path.join(root, file)
+                    img = cv2.imread(file_path)
+                    if img is None:
+                        continue
 
-                #Grayscale
-                gray = cv2.cvTcolor(img, cv2.COLOR_BGR2GRAY)
-                processed_img = cv2.cvTcolor(gray, cv2.COLOR_BGR2GRAY)
+                    #Grayscale
+                    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                    processed_img = cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
-                #FIle Compression
-                _, compressed_bytes = cv2.imencode('.jpeg', processed_img, encode_param)
-                with open(file_path, 'wb') as f:
-                    f.write(compressed_bytes.tobytes())
+                    #FIle Compression
+                    _, compressed_bytes = cv2.imencode('.jpeg', processed_img, encode_param)
+                    with open(file_path, 'wb') as f:
+                        f.write(compressed_bytes.tobytes())
 
-                processed_count += 1
+                    processed_count += 1
 
     print(f"Converted and compressed {processed_count} images sucessfully. \n")
 

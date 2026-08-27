@@ -165,3 +165,6 @@ Ferrero: August 27, 2026
 3. Enable ip compatibility in Phase 2
 4. Enable running 500 requests in Phase 2
 5. Debugged indefinite execution bug for cv2.VideoCapture() in Phase 1 and Phase 2
+3. Debugged preprocessing and/or augmentation
+4. Transfered brightness augmentation from DIY to Ultralytics parameters
+5. Stopped recording to reinstall python 3.12 because pytorch not working on 3.14

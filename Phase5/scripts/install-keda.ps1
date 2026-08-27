@@ -1,5 +1,8 @@
-Write-Host "Installing KEDA..."
+Write-Host "Installing KEDA..." -ForegroundColor Cyan
 
-kubectl apply -f https://github.com/kedacore/keda/releases/download/v2.17.2/keda-2.17.2.yaml
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+helm install keda kedacore/keda --namespace keda --create-namespace
 
+Write-Host "Checking KEDA deployment status..." -ForegroundColor Green
 kubectl get pods -n keda

@@ -1,7 +1,8 @@
-Write-Host "Rebuilding Docker Image..."
+Write-Host "Rebuilding Docker image and re-deploying..." -ForegroundColor Cyan
 
-docker build -t inference-program ../docker
+& "$PSScriptRoot/build.ps1"
 
-kubectl rollout restart deployment inference -n smart-parking
+Write-Host "Rolling restart of the deployment..." -ForegroundColor Yellow
+kubectl rollout restart deployment/smart-parking -n smart-parking
 
-kubectl rollout status deployment inference -n smart-parking
+Write-Host "Rebuild process finished." -ForegroundColor Green
