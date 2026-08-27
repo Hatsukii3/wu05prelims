@@ -21,6 +21,7 @@ bufferImageCopy = None # to clear window for editing spot events
 enableIP = False # either real ip cameras or use sample bufferImage
 quitSpotMaking = False # check if user quits editing parking spots
 deletedPolygon = False # check if user deletes a polygon
+ipCams = dict()
 
 
 #mongodb
@@ -35,16 +36,63 @@ print("Redis Ready")
 
 #load data
 
-data = None
+data = []
 
 
+def keyStr(obj):
+    return f"{obj['location']}-{obj['network']}-{obj['id']}"
 
 def updateData():
     print("Refetching mongodb")
     global data
-    data = [i for i in mdbcol.find()]
+
+    for i in mdbcol.find():
+        data.append(i)
+
+
+        ipCams[keyStr(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
+
+        if not ipCams[keyStr(i)].isOpened():
+            print(f"Cannot load camera for {keyStr(i)}")
+
 
 updateData()
+
+def imageCapture(obj):
+    global bufferImage, capWidth, capHeight
+
+    if enableIP:
+
+        ret,bufferImage = ipCams[keyStr(obj)].read()
+        print(ret)
+
+    else:
+        bufferImage = cv2.imread(f"{fileDir}/foo.jpeg")
+
+    if bufferImage is None: return
+
+    capWidth, capHeight, dummy = bufferImage.shape
+
+    bufferImage = cv2.resize(src=bufferImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
+                                      interpolation = cv2.INTER_LINEAR) #resizing
+
+    capWidth, capHeight, dummy = bufferImage.shape
+
+def verifyConnection(obj): 
+    imageCapture(obj)
+
+    if bufferImage is None:
+        print("Please check RTSP/HTTP url. Cannot gather video feed")
+        return
+
+    while True:
+        cv2.imshow("Verify Connection", bufferImage)
+
+        key = cv2.waitKey(1) & 0xFF
+        if key == 27 or key == ord('q'):
+            break
+
+    cv2.destroyAllWindows()
 
 def createNewObject():
     while True:
@@ -76,6 +124,7 @@ def createNewObject():
 
     mdbcol.insert_one(newObject)
     updateData()
+    verifyConnection(newObject)
     configureObject(newObject)
 
 def editObject():
@@ -131,7 +180,7 @@ def configureObject(obj): #new set of prompts after selecting/creating object
         choice = input("Enter Choice: ")
 
         if(choice == "1"): #update url
-            newURL = input("Enter New URL")
+            newURL = input("Enter New URL: ")
             mdbcol.find_one_and_update({
                 "location": obj['location'],
                 'id':obj['id'],
@@ -140,6 +189,7 @@ def configureObject(obj): #new set of prompts after selecting/creating object
                 "$set": {"url":newURL}
             })
             updateData()
+            verifyConnection(obj)
         elif(choice == "2"):
             configureSpots(obj)
         elif (choice == "3"):
@@ -150,18 +200,16 @@ def configureObject(obj): #new set of prompts after selecting/creating object
 def configureSpots(obj):
     global bufferPolygons, quitSpotMaking, bufferContours, bufferImage, bufferImageCopy
 
+    imageCapture(obj)
 
-    bufferImage = cv2.imread(f"{fileDir}/foo.jpeg")
-    
+    if bufferImage is None: 
+        print("Please check RTSP/HTTP url. Cannot gather video feed")
+        return
 
-    capWidth, capHeight, dummy = bufferImage.shape
-    bufferImage = cv2.resize(src=bufferImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
-                                      interpolation = cv2.INTER_LINEAR) #resizing
-    capHeight, capWidth,  dummy = bufferImage.shape #update sizes
 
     bufferImageCopy = bufferImage.copy() #get copy to clear window properly 
 
-    bytePolygons = redisClient.get(f"{obj['location']}-{obj['network']}-{obj['id']}-polygons")
+    bytePolygons = redisClient.get(f"{keyStr(obj)}-polygons")
 
     if(bytePolygons == None):
         bufferPolygons = []
@@ -283,6 +331,8 @@ def markSpot():
     bufferPolygon = []
     cv2.destroyAllWindows()
     print(bufferPolygons)
+
+
 
 
 #next tasks

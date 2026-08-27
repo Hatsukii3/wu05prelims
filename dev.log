@@ -158,6 +158,13 @@ Gaje: August 25, 2026
 Gaje: August 26, 2026
 1. Modified Phase 3 (changed to remove convert best.pt to ONNX
 2. Ran the Phase 3 pipeline
+
+Ferrero: August 27, 2026
+1. Make Phase 1 IP compatible to switch between ip camera compatibility and pipeline testing
+2. Bug fixed. can connect to ip cameras.   
+3. Enable ip compatibility in Phase 2
+4. Enable running 500 requests in Phase 2
+5. Debugged indefinite execution bug for cv2.VideoCapture() in Phase 1 and Phase 2
 3. Debugged preprocessing and/or augmentation
 4. Transfered brightness augmentation from DIY to Ultralytics parameters
 5. Stopped recording to reinstall python 3.12 because pytorch not working on 3.14
