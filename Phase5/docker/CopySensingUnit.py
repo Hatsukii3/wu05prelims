@@ -20,10 +20,10 @@ def key(obj):
     return f"{obj['location']}-{obj['network']}-{obj['id']}"
 
 # rabbitmq setup/boilerplate
-connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5672)) #set to port 5673 in jummel's laptop
+connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', port=5673)) #set to port 5673 in jummel's laptop
 channel = connection.channel()
-channel.queue_declare(queue='requests')
-channel.queue_declare(queue='timestamps') #queue receiving timestamps
+channel.queue_declare(queue='requests', durable=False)
+channel.queue_declare(queue='timestamps', durable=False) #queue receiving timestamps
 print("RabbitMQ Ready")
 
 #redis setup/boilerplate
@@ -50,7 +50,7 @@ print("SensingUnit Started...")
 for i in mdbdoc:
     redisClient.set(key(i) + "-lock", "no") #set to unlock status
     
-    ipCams[key(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
+    ipCams[key(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 10])
 
     if not ipCams[key(i)].isOpened():
         print(f"Cannot load camera for {key(i)}")
@@ -60,7 +60,9 @@ while True:
         if(gatheringMode and gatheringItr == 500): #during phase 6, terminate if requests sent is 500
             break
         camID = key(i) #set camera identification
-        if(redisClient.get(camID + "-lock") == b'yes'):
+        
+        lock_status = redisClient.get(camID + "-lock")
+        if(lock_status and lock_status.decode('utf-8') == 'yes'):
             continue
 
         #timestamp uid
@@ -76,7 +78,7 @@ while True:
             capImage = cv2.imread(f"{fileDir}/foo.jpeg")
 
         if capImage is None:
-            print("Cannot get image for {key(i)}")
+            print(f"Cannot get image for {camID}")
             continue
 
         #image preprocessing (core)
@@ -102,17 +104,16 @@ while True:
         print(f"Locking: {camID}")
         redisClient.set(camID + "-lock", "yes")
 
-
         channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
 
         # decode and view Image (temporary)
-        decode = np.frombuffer(capBytes, dtype=np.uint8)
-        decode = cv2.imdecode(decode, 0)
-        cv2.imwrite("newimage.jpg", decode)
-        cv2.imshow("IMAGE", decode)
-        k = cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # decode = np.frombuffer(capBytes, dtype=np.uint8)
+        # decode = cv2.imdecode(decode, 0)
+        # cv2.imwrite("newimage.jpg", decode)
+        # cv2.imshow("IMAGE", decode)
+        # k = cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         print()
         gatheringItr += 1
 
-#PROGAM SUCCESS!
+#PROGAM SUCCESS!*

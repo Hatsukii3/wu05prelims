@@ -48,7 +48,7 @@ redisClient = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 print("Redis Ready")
 
 #yolo setup
-model = YOLO(f"{fileDir}/best.pt")
+model = YOLO("./best.pt")
 print("YOLO Ready")
 
 def getColours(cls_num):
@@ -131,9 +131,9 @@ def consume(ch, method, properties, body):
 
     # decode = np.frombuffer(capBytes, dtype=np.uint8)
     # decode = cv2.imdecode(decode, 0)
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("IMAGE", img)
+    # k = cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 
 #manual acknowledgement to prevent data loss
