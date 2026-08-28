@@ -13,7 +13,7 @@ fileDir = os.path.dirname(os.path.abspath(__file__)) #path of script
 ipUrl = 'http://192.168.254.110:8080/video'
 enableIP = False #verify ip camera connection
 ipCams = dict() #loading camera data
-gatheringMode = False # attempt to send 500 image requests in phase 6
+gatheringMode = True # attempt to send 500 image requests in phase 6
 gatheringItr = 0
 
 def key(obj):
@@ -55,7 +55,7 @@ for i in mdbdoc:
     if not ipCams[key(i)].isOpened():
         print(f"Cannot load camera for {key(i)}")
 
-while True:
+while not (gatheringMode and gatheringItr == 500):
     for i in mdbdoc: #sample amount of cameras
         if(gatheringMode and gatheringItr == 500): #during phase 6, terminate if requests sent is 500
             break

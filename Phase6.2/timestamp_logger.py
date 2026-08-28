@@ -10,7 +10,7 @@ OUTPUT_FILE = "data1.xlsx"
 logs = {}                  
 
 # Connect to RabbitMQ
-connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', port=5673))
+connection = pika.BlockingConnection(pika.ConnectionParameters('localhost', port=5672))
 channel = connection.channel()
 
 # Making sure the queue exists
