@@ -8,7 +8,7 @@ import time
 import os
 
 #setup
-imWidth = 300
+imWidth = 640
 fileDir = os.path.dirname(os.path.abspath(__file__)) #path of script
 ipUrl = 'http://192.168.254.110:8080/video'
 enableIP = False #verify ip camera connection

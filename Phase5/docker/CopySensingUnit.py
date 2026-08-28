@@ -75,7 +75,7 @@ while True:
         if enableIP:
             capImage = ipCams[camID].read()[1]
         else:
-            capImage = cv2.imread(f"{fileDir}/foo.jpeg")
+            capImage = cv2.imread(f"{fileDir}/foo1.jpg")
 
         if capImage is None:
             print(f"Cannot get image for {camID}")
@@ -85,10 +85,12 @@ while True:
         capWidth, capHeight, dummy = capImage.shape
         capImage = cv2.cvtColor(capImage, cv2.COLOR_BGR2GRAY) #grayscaling
 
-        encodeParam = [int(cv2.IMWRITE_JPEG_QUALITY), 10]
+        encodeParam = [int(cv2.IMWRITE_JPEG_QUALITY), 70]
         capImage = cv2.resize(src=capImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
                               interpolation = cv2.INTER_LINEAR) #resizing
+        
         capJpg = cv2.imencode('.jpeg', capImage, encodeParam)[1] #jpeg compression
+
         capNpa = np.array(capJpg)
         capBytes = capNpa.tobytes()
      

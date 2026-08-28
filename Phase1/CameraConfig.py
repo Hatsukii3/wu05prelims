@@ -48,8 +48,6 @@ def updateData():
 
     for i in mdbcol.find():
         data.append(i)
-
-
         ipCams[keyStr(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
 
         if not ipCams[keyStr(i)].isOpened():
@@ -62,12 +60,11 @@ def imageCapture(obj):
     global bufferImage, capWidth, capHeight
 
     if enableIP:
-
         ret,bufferImage = ipCams[keyStr(obj)].read()
         print(ret)
 
     else:
-        bufferImage = cv2.imread(f"{fileDir}/foo.jpeg")
+        bufferImage = cv2.imread(f"{fileDir}/foo1.jpg")
 
     if bufferImage is None: return
 
@@ -108,6 +105,10 @@ def createNewObject():
         if(exitInput): break
         else:
             print("Object already exists with the same details.")
+
+            prompt = input("Continue? (yes): ")
+            if(prompt != "yes"):
+                return
 
 
     newCameraURL = input("HTTP/RTSP url: ")
@@ -285,7 +286,7 @@ def spotMouseEvent(event, x, y, flags, param):
 def markSpot():
     global bufferPolygon, deletedPolygon, quitSpotMaking
 
-    cv2.polylines(bufferImage, np.array(bufferPolygons), True, (255,0,0,100), 3)
+    cv2.polylines(bufferImage, np.array(bufferPolygons), True, (255,0,0,100), 1)
 
     for i in range(len(bufferPolygons)):
         ax = 0;
@@ -297,7 +298,7 @@ def markSpot():
         
         text = str(i+1)
         font = cv2.FONT_HERSHEY_SIMPLEX
-        font_scale = 1.0
+        font_scale = 0.5
         thickness = 2        
 
         (tw,th),baseline = cv2.getTextSize(text, font, font_scale, thickness)
