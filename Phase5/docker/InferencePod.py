@@ -75,6 +75,7 @@ def consume(ch, method, properties, body):
     img = redisClient.get(camID)
     img = np.frombuffer(img, dtype=np.uint8)
     img = cv2.imdecode(img, cv2.IMREAD_COLOR)
+    img = img.astype(np.uint8)
     imgWidth, imgHeight, channels = img.shape
 
     #fetch polygon
@@ -86,7 +87,7 @@ def consume(ch, method, properties, body):
 
 
     #image inference
-    results = model(img, conf=0.5) 
+    results = model.predict(source=img) 
 
     for polygon in polygons:
         for vertex in polygon:
@@ -101,7 +102,10 @@ def consume(ch, method, properties, body):
         for box in result.boxes:
             x1, y1, x2, y2 = map(int, box.xyxy[0])
             center = ((x1+x2)//2,(y1+y2)//2)
-            cv2.circle(img, center,10, (255,0,0))
+            cls = int(box.cls[0])
+            class_name = class_names[cls]
+            if(class_name == "space-occupied"):
+                cv2.circle(img, center,3, (255,0,0))
             for i in range(len(contours)):
                 if(cv2.pointPolygonTest(contours[i], center, False) >= 0):
                     inside[i] = 1
@@ -131,9 +135,9 @@ def consume(ch, method, properties, body):
 
     # decode = np.frombuffer(capBytes, dtype=np.uint8)
     # decode = cv2.imdecode(decode, 0)
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("IMAGE", img)
+    # k = cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 
 #manual acknowledgement to prevent data loss

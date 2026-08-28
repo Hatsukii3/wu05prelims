@@ -50,7 +50,7 @@ print("SensingUnit Started...")
 for i in mdbdoc:
     redisClient.set(key(i) + "-lock", "no") #set to unlock status
     
-    ipCams[key(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
+    ipCams[key(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 10])
 
     if not ipCams[key(i)].isOpened():
         print(f"Cannot load camera for {key(i)}")
@@ -73,7 +73,7 @@ while True:
         if enableIP:
             capImage = ipCams[camID].read()[1]
         else:
-            capImage = cv2.imread(f"{fileDir}/foo.jpeg")
+            capImage = cv2.imread(f"{fileDir}/foo1.jpg")
 
         if capImage is None:
             print("Cannot get image for {key(i)}")
@@ -83,10 +83,12 @@ while True:
         capWidth, capHeight, dummy = capImage.shape
         capImage = cv2.cvtColor(capImage, cv2.COLOR_BGR2GRAY) #grayscaling
 
-        encodeParam = [int(cv2.IMWRITE_JPEG_QUALITY), 10]
+        encodeParam = [int(cv2.IMWRITE_JPEG_QUALITY), 70]
         capImage = cv2.resize(src=capImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
                               interpolation = cv2.INTER_LINEAR) #resizing
+        
         capJpg = cv2.imencode('.jpeg', capImage, encodeParam)[1] #jpeg compression
+
         capNpa = np.array(capJpg)
         capBytes = capNpa.tobytes()
      
@@ -106,12 +108,12 @@ while True:
         channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
 
         # decode and view Image (temporary)
-        decode = np.frombuffer(capBytes, dtype=np.uint8)
-        decode = cv2.imdecode(decode, 0)
-        cv2.imwrite("newimage.jpg", decode)
-        cv2.imshow("IMAGE", decode)
-        k = cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # decode = np.frombuffer(capBytes, dtype=np.uint8)
+        # decode = cv2.imdecode(decode, 0)
+        # cv2.imwrite("newimage.jpg", decode)
+        # cv2.imshow("IMAGE", decode)
+        # k = cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         print()
         gatheringItr += 1
 
