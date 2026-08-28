@@ -48,7 +48,7 @@ redisClient = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 print("Redis Ready")
 
 #yolo setup
-model = YOLO(f"{fileDir}/best.pt")
+model = YOLO("./best.pt")
 print("YOLO Ready")
 
 def getColours(cls_num):
