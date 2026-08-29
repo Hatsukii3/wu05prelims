@@ -27,16 +27,18 @@ def main():
             lr0 = 0.01,
             lrf = 0.01,
 
-            # Augmentation
-            degrees = 15.0,
-            translate = 0.1,
-            scale = 0.5,
-            shear = 2.0,
-            perspective = 0.0005,
-            fliplr = 0.5,
-            mosaic = 1.0,
-            mixup = 0.5,
-            hsv_v = 0.5, 
+            # Updated Augmentation parameters
+            hsv_h = 1.0,           # Hue variation
+            hsv_s = 0.0,           # Saturation set to 0 to preserve grayscaling
+            hsv_v = 0.5,           # Brightness variation
+            degrees = 180.0,       # Allow all orientations (180 degrees)
+            translate = 0.0,       # Translation set to 0
+            scale = 0.5,           # Scale factor (0.5 means range 0.5x to 1.5x)
+            perspective = 0.0005,  # Perspective adjustment
+            flipud = 0.5,          # 50% chance vertical flip
+            fliplr = 0.5,          # 50% chance horizontal flip
+            mosaic = 0.0,          # Mosaic disabled (0)
+            erasing = 0.4,         # Random erasing probability
 
             project = str(runs_dir),
             name = "vehicle_model",

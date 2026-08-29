@@ -6,7 +6,7 @@ def convert_to_grayscale(dataset_dir = "dataset"):
     print("[1/3] Starting dataset grayscale conversion and compression...")
     processed_count = 0
 
-    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 10]
+    encode_param = [int(cv2.IMWRITE_JPEG_QUALITY), 70] #changed compression value to 70
 
     for split in ["train", "valid", "test"]:
         img_folder = os.path.join(dataset_dir, split, "images")

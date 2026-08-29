@@ -170,3 +170,13 @@ Ferrero: August 27, 2026
 5. Stopped recording to reinstall python 3.12 because pytorch not working on 3.14
 6. validating phase 4
 7. debugging polygons in phase 4
+
+Malan: August 28, 2026
+1. Rebuilt Docker image with distinct name inference-pod-1
+2. Updated deployment to target inference-pod-1:latest in smart-parking namespace
+3. Resolved git merge conflicts and unmerged files error across local repository branches
+4. Fixed pika AMQPConnectionError in timestamp_logger.py by configuring RabbitMQ connection parameters
+
+Malan: August 29, 2026
+1. Configured custom Ultralytics YOLOv8 hyperparameters for data augmentation (hsv_h=1.0, hsv_s=0.0, hsv_v=0.5, degrees=180.0, scale=0.5, flipud=0.5, fliplr=0.5, mosaic=0.0, erasing=0.4)
+2. Updated offline image compression settings in convert_to_grayscale script to JPEG quality 70

@@ -1,9 +1,1 @@
-# Ignore all dataset folders
-**/dataset/
 dataset/
-
-# Ignore Phase3_trial runs folder
-Phase3_trial/runs/
-
-# Ignore virtual environments
-**/venv/
