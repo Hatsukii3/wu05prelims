@@ -136,9 +136,9 @@ def consume(ch, method, properties, body):
 
     # decode = np.frombuffer(capBytes, dtype=np.uint8)
     # decode = cv2.imdecode(decode, 0)
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("IMAGE", img)
+    # k = cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 
 #manual acknowledgement to prevent data loss

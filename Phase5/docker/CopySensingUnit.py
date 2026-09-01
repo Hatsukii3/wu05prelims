@@ -110,12 +110,12 @@ while not (gatheringMode and gatheringItr == 500):
         channel.basic_publish("", "timestamps", f"stamp2.{uid}.{time.time_ns()}") #record second stamp
 
         # decode and view Image (temporary)
-        decode = np.frombuffer(capBytes, dtype=np.uint8)
-        decode = cv2.imdecode(decode, 0)
-        cv2.imwrite("newimage.jpg", decode)
-        cv2.imshow("IMAGE", decode)
-        k = cv2.waitKey(0)
-        cv2.destroyAllWindows()
+        # decode = np.frombuffer(capBytes, dtype=np.uint8)
+        # decode = cv2.imdecode(decode, 0)
+        # cv2.imwrite("newimage.jpg", decode)
+        # cv2.imshow("IMAGE", decode)
+        # k = cv2.waitKey(0)
+        # cv2.destroyAllWindows()
         print()
         gatheringItr += 1
 
