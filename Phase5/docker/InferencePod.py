@@ -134,9 +134,9 @@ def consume(ch, method, properties, body):
     channel.basic_publish("", "timestamps", f"stamp4.{uid}.{time.time_ns()}") # 4th tiemstamp
 
    
-    cv2.imshow("IMAGE", img)
-    k = cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # cv2.imshow("IMAGE", img)
+    # k = cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
 
 #manual acknowledgement to prevent data loss
