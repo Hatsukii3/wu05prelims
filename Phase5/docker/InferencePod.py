@@ -22,7 +22,7 @@ MDB_PORT = int(os.environ.get("MONGO_PORT", 27017))
 REDIS_PORT = int(os.environ.get("REDIS_PORT", 6379))
 RABBITMQ_PORT = int(os.environ.get("RABBITMQ_PORT", 5672))
 
-# RABBITMQ_PORT = int(os.environ.get("RABBITMQ_PORT", 5673))
+RABBITMQ_PORT = int(os.environ.get("RABBITMQ_PORT", 5673))
 
 
 #MongoDB setup
@@ -48,7 +48,7 @@ redisClient = redis.Redis(host=REDIS_HOST, port=REDIS_PORT)
 print("Redis Ready")
 
 #yolo setup
-model = YOLO("./best.pt")
+model = YOLO(f"{fileDir}/best_int8.tflite")
 print("YOLO Ready")
 
 def getColours(cls_num):
@@ -59,7 +59,7 @@ def getColours(cls_num):
 
 channel.basic_qos(prefetch_count=1)
 def consume(ch, method, properties, body):
-
+    
     #setup
     count = 0
 
@@ -133,11 +133,10 @@ def consume(ch, method, properties, body):
 
     channel.basic_publish("", "timestamps", f"stamp4.{uid}.{time.time_ns()}") # 4th tiemstamp
 
-    # decode = np.frombuffer(capBytes, dtype=np.uint8)
-    # decode = cv2.imdecode(decode, 0)
-    # cv2.imshow("IMAGE", img)
-    # k = cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+   
+    cv2.imshow("IMAGE", img)
+    k = cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
 
 #manual acknowledgement to prevent data loss
