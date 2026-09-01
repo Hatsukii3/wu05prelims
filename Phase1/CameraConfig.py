@@ -48,7 +48,7 @@ def updateData():
 
     for i in mdbcol.find():
         data.append(i)
-        ipCams[keyStr(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1000])
+        ipCams[keyStr(i)] = cv2.VideoCapture(i["url"], cv2.CAP_FFMPEG, params=[cv2.CAP_PROP_OPEN_TIMEOUT_MSEC, 1])
 
         if not ipCams[keyStr(i)].isOpened():
             print(f"Cannot load camera for {keyStr(i)}")
@@ -70,9 +70,9 @@ def imageCapture(obj):
 
     capWidth, capHeight, dummy = bufferImage.shape
 
-    bufferImage = cv2.resize(src=bufferImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
+    bufferImage = cv2.resize(src=bufferImage, dsize=None, fx=(imWidth/min(capWidth, capHeight)), fy=(imWidth/min(capWidth, capHeight)),
                                       interpolation = cv2.INTER_LINEAR) #resizing
-
+    bufferImage = bufferImage[0:640, 0:640]
     capWidth, capHeight, dummy = bufferImage.shape
 
 def verifyConnection(obj): 

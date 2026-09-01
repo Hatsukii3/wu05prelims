@@ -135,7 +135,7 @@ Ferrero: August 19, 2026
 4. Future: will properly stitch the individual prompts to a central cohesive promp
 5. All tasks done with Member 3's laptop 
 
-Malan: August 21, 2026
+Malan: August 21, 2022
 1. Created the Phase3_trial directory structure and dataset configuration setup
 2. Configured image preprocessing pipeline for grayscale conversion and file size compression below 100 KB
 3. Implemented YOLOv8 fine-tuning script with customized data augmentations (mosaic, mixup, rotation, scaling)
@@ -163,7 +163,7 @@ Ferrero: August 27, 2026
 1. Make Phase 1 IP compatible to switch between ip camera compatibility and pipeline testing
 2. Bug fixed. can connect to ip cameras.   
 3. Enable ip compatibility in Phase 2
-4. Enable running 500 requests in Phase 2
+4. Enable running 500 requests in P2ase 2
 5. Debugged indefinite execution bug for cv2.VideoCapture() in Phase 1 and Phase 2
 3. Debugged preprocessing and/or augmentation
 4. Transfered brightness augmentation from DIY to Ultralytics parameters
