@@ -86,9 +86,10 @@ while not (gatheringMode and gatheringItr == 500):
         capImage = cv2.cvtColor(capImage, cv2.COLOR_BGR2GRAY) #grayscaling
 
         encodeParam = [int(cv2.IMWRITE_JPEG_QUALITY), 70]
-        capImage = cv2.resize(src=capImage, dsize=None, fx=(imWidth/max(capWidth, capHeight)), fy=(imWidth/max(capWidth, capHeight)),
-                              interpolation = cv2.INTER_LINEAR) #resizing
         
+        capImage = cv2.resize(src=capImage, dsize=None, fx=(imWidth/min(capWidth, capHeight)), fy=(imWidth/min(capWidth, capHeight)),
+                                        interpolation = cv2.INTER_LINEAR) #resizing
+        capImage = capImage[0:640, 0:640]
         capJpg = cv2.imencode('.jpeg', capImage, encodeParam)[1] #jpeg compression
 
         capNpa = np.array(capJpg)

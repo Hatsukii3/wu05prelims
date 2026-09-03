@@ -105,10 +105,11 @@ def consume(ch, method, properties, body):
             cls = int(box.cls[0])
             class_name = class_names[cls]
             if(class_name == "space-occupied"):
+                cv2.rectangle(img, (x1, y1), (x2, y2), (255,0,0), 2)
                 cv2.circle(img, center,3, (255,0,0))
-            for i in range(len(contours)):
-                if(cv2.pointPolygonTest(contours[i], center, False) >= 0):
-                    inside[i] = 1
+                for i in range(len(contours)):
+                    if(cv2.pointPolygonTest(contours[i], center, False) > 0):
+                        inside[i] = 1
 
     for i in inside:
         if(i == 1):
@@ -133,7 +134,8 @@ def consume(ch, method, properties, body):
 
     channel.basic_publish("", "timestamps", f"stamp4.{uid}.{time.time_ns()}") # 4th tiemstamp
 
-   
+    # decode = np.frombuffer(capBytes, dtype=np.uint8)
+    # decode = cv2.imdecode(decode, 0)
     # cv2.imshow("IMAGE", img)
     # k = cv2.waitKey(0)
     # cv2.destroyAllWindows()
