@@ -180,3 +180,6 @@ Malan: August 28, 2026
 Malan: August 29, 2026
 1. Configured custom Ultralytics YOLOv8 hyperparameters for data augmentation (hsv_h=1.0, hsv_s=0.0, hsv_v=0.5, degrees=180.0, scale=0.5, flipud=0.5, fliplr=0.5, mosaic=0.0, erasing=0.4)
 2. Updated offline image compression settings in convert_to_grayscale script to JPEG quality 70
+
+Ferrero: August 1, 2026
+1. Implemented an update on Phase 1 and 2 Program to resize image for quantized model (requires fixed images)
