@@ -181,5 +181,19 @@ Malan: August 29, 2026
 1. Configured custom Ultralytics YOLOv8 hyperparameters for data augmentation (hsv_h=1.0, hsv_s=0.0, hsv_v=0.5, degrees=180.0, scale=0.5, flipud=0.5, fliplr=0.5, mosaic=0.0, erasing=0.4)
 2. Updated offline image compression settings in convert_to_grayscale script to JPEG quality 70
 
-Ferrero: August 1, 2026
+Malan: August 30, 2026
+1. Re-verified Kubernetes cluster deployment and pod status on Docker Desktop prior to benchmarking runs  
+2. Validated end-to-end messaging pipeline stability between the sensing unit program and processing layer  
+
+Malan: August 31, 2026
+1. Conducted benchmark testing of the smart parking pipeline across camera scale loads from 7 to 56 simulated cameras using the unquantized model  
+2. Collected performance metrics including latency measurements across all test setups  
+3. Recorded KEDA replica scaling behavior up to 7 inference pods during peak simulated load in Phase 5
+
+Malan: September 1, 2026
+1. Quantized the YOLOv8 model using TensorFlow to optimize inferencing performance  
+2. Updated Camera Configuration Program and Sensing Unit Program to process and resize images to 640 x 640  
+3. Re-integrated the updated software pipeline into the cluster and validated end-to-end payload execution
+
+Ferrero: September 1, 2026
 1. Implemented an update on Phase 1 and 2 Program to resize image for quantized model (requires fixed images)
