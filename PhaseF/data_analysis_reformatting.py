@@ -13,8 +13,8 @@ sheet.title = "Summary"
 sheet.append(["Row", "Source File", "Total Processing Time"])
 
 #Process all files
-for i in range(3):
-    filename = f"./dataFolder/data{i + 1}.xlsx"
+for i in range(8):
+    filename = f"./PhaseF/dataFolder/load_{(i + 1)*7}.xlsx"
 
     workbook =  load_workbook(filename)
     data = workbook.active
