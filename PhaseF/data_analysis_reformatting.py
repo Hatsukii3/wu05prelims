@@ -14,7 +14,7 @@ sheet.append(["Row", "Source File", "Total Processing Time"])
 
 #Process all files
 for i in range(8):
-    filename = f"./PhaseF/dataFolder/load_{(i + 1)*7}.xlsx"
+    filename = f"./Phase6.2/quantized (Cleaned Trial2)/{(i + 1)*7}.xlsx"
 
     workbook =  load_workbook(filename)
     data = workbook.active
@@ -24,10 +24,10 @@ for i in range(8):
     for row in data.iter_rows(values_only=True):
         total = float(row[0]) + float(row[1]) + float(row[2])
 
-        sheet.append([row_num, filename, total])
+        sheet.append([row_num, (i + 1)*7, total])
         row_num += 1
 
 #Save summary file
-summary.save("SUMMARY.xlsx")
+summary.save("SUMMARY (Trial2).xlsx")
 
 print("Done!")
